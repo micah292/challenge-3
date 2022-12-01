@@ -42,7 +42,7 @@ function generatePassword() {
   }
   // null = nothing
   // store user input
-  // key 
+  // var *key name* = {1 object var: same object var} 
   var inputStore = {
     userInput: userInput,
     confirmUppercase: confirmUppercase,
