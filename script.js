@@ -4,6 +4,7 @@ var upperCase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"
 var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 var lowerCase = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 var symbols = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "+", "=", ",", "<", ">", "/", "'"]
+
 var generateBtn = document.querySelector("#generate");
 
 function generatePassword() {
@@ -18,7 +19,7 @@ function generatePassword() {
     return null
   }
   // null = nothing (not necessary but good practice)
-  // user input is what user value is entered
+  // user input : what user value is entered
   if (userInput > 128) {
     alert("you must enter less than 128")
     return null
@@ -52,13 +53,14 @@ function generatePassword() {
     confirmSymbols: confirmSymbols
 
   }
-  //will resturn inputStore var
-  return inputStore
+  console.log(inputStore)
+  //will return inputStore var
+  return inputStore;
 }
-//randomizer selcector
-function randomizer(charz) {
-  var randomChar = Math.floor(Math.random() * charz.length)
-  var randomEl = charz[randomChar]
+//randomizer selector
+function randomizer(chars) {
+  var randomChar = Math.floor(Math.random() * chars.length)
+  var randomEl = chars[randomChar]
   return randomEl
   //will return random var
 }
@@ -85,31 +87,36 @@ function createPassword() {
   if (!choices) {
     return null
   }
-  if (!choices.confirmUppercase) {
-    possibleChars = possibleChars + upperCase
+  console.log("choices", choices)
+  if (choices.confirmUppercase) {
+    possibleChars = possibleChars.concat(upperCase)
     definiteChars.push(randomizer(upperCase))
   }
 
-  if (!choices.confirmLowerCase) {
-    possiblesChars = possibleChars + lowerCase
+  if (choices.confirmLowerCase) {
+    possibleChars = possibleChars.concat(lowerCase)
     definiteChars.push(randomizer(lowerCase))
   }
 
-  if (!choices.confirmNumbers) {
-    possibleChars = possibleChars + numbers
+  if (choices.confirmNumbers) {
+    possibleChars = possibleChars.concat(numbers)
     definiteChars.push(randomizer(numbers))
   }
-    if (!choices.confirmSymbols) {
-      possibleChars = possibleChars + symbols
-      definiteChars.push(randomizer(symbols))
-    }
-
+  if (choices.confirmSymbols) {
+    possibleChars = possibleChars.concat(symbols)
+    definiteChars.push(randomizer(symbols))
   }
-
-
-
-
+  // 
+  var size = choices.userInput - definiteChars.length
+// for loop
+  for (i=0; i < choices.userInput - size; i++) {
+   
+    definiteChars.push(randomizer(possibleChars))
+  }
+ return definiteChars.join("")
+ 
 }
+
 
 
 
@@ -119,7 +126,7 @@ function createPassword() {
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
+  var password = createPassword();
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
