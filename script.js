@@ -109,8 +109,8 @@ function createPassword() {
   // 
   var size = choices.userInput - definiteChars.length
 // for loop
-  for (i=0; i < choices.userInput - size; i++) {
-   
+  for (i=0; i <size; i++) {
+   console.log (i,choices.userInput-size)
     definiteChars.push(randomizer(possibleChars))
   }
  return definiteChars.join("")
